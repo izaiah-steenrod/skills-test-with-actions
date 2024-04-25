@@ -32,6 +32,9 @@ jobs:
       # Adds a markdown linter step
       - name: Run markdown lint
         run: |
-          npm install remark-cli remark-preset-lint-consistent
-          npx remark . --use remark-preset-lint-consistent --frail
-      #I'm adding a comment becasue all the tests passed so I'm trying to trigger step 3
+          npm install remark-cli remark-preset-lint-consistent vfile-reporter-json
+          npx remark . --use remark-preset-lint-consistent --report vfile-reporter-json 2> remark-lint-report.json
+      - uses: actions/upload-artifact@v3
+        with:
+          name: remark-lint-report
+          path: remark-lint-report.json
